@@ -5,11 +5,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -27,12 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         TextInputEditText addNum = findViewById(R.id.textInputEditText);
         Button addBtn = findViewById(R.id.button);
-        Button mediaBtn = findViewById(R.id.button1);
-        Button modaBtn = findViewById(R.id.button2);
-        Button medianaBtn = findViewById(R.id.button3);
-        Button varBtn = findViewById(R.id.button4);
-        Button desPadBtn = findViewById(R.id.button5);
-        Button limparBtn = findViewById(R.id.button6);
+        Button calcBtn = findViewById(R.id.button2);
+        Button limparBtn = findViewById(R.id.button3);
         TextView vis = findViewById(R.id.textView6);
         TextView resMedia = findViewById(R.id.textView1);
         TextView resModa = findViewById(R.id.textView2);
@@ -69,19 +61,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mediaBtn.setOnClickListener(view -> {
+        calcBtn.setOnClickListener(view -> {
 
+            //media
             float sum = 0.0F;
-            float res;
+            float media;
             for(float value : numbers){
                 sum+=value;
             }
-            res = sum / numbers.toArray().length;
-            resMedia.setText(String.valueOf(res));
-        });
+            media = sum / numbers.toArray().length;
+            resMedia.setText(String.valueOf(media));
 
-        modaBtn.setOnClickListener(view -> {
-
+            //moda
             // Map para armazenar a frequência de cada valor
             HashMap<Float, Integer> frequencyMap = new HashMap<>();
 
@@ -116,10 +107,8 @@ public class MainActivity extends AppCompatActivity {
             modaText.setLength(modaText.length() - 2);
 
             resModa.setText(modaText);
-        });
 
-        medianaBtn.setOnClickListener(view -> {
-
+            //mediana
             // Ordena os valores
             Collections.sort(numbers);
 
@@ -134,14 +123,19 @@ public class MainActivity extends AppCompatActivity {
                 float middle2 = numbers.get(size / 2);
                 resMediana.setText(String.valueOf((middle1 + middle2) / 2));
             }
-        });
 
-        varBtn.setOnClickListener(view -> {
+            //Variância
+            float sumSquaredDifferences = 0;
 
-        });
+            for (float number : numbers) {
+                sumSquaredDifferences += Math.pow(number - media, 2);
+            }
+            float variancia = sumSquaredDifferences / (numbers.size() - 1);
+            resVar.setText(String.valueOf(variancia));
 
-        desPadBtn.setOnClickListener(view -> {
-
+            //Desvio Padrão
+            float desPad = (float) Math.sqrt(variancia);
+            resDesPad.setText(String.valueOf(desPad));
         });
 
         limparBtn.setOnClickListener(view -> {
